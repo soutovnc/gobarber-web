@@ -1,95 +1,40 @@
-import React, { useCallback, useRef } from 'react';
-import { FormHandles } from '@unform/core';
-import { Form } from '@unform/web';
-import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { FiLogIn, FiMail, FiUser, FiLock, FiArrowLeft } from 'react-icons/fi';
 
-import getValidationErros from '../../utils/getValidationErrors';
+import logoImg from '../../assets/logo.svg';
 
-import Input from '../../components/Input/index';
+import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import dataImg from '../../assets/data.png';
-import logoGoogle from '../../assets/logo-google.svg';
+import { Container, Content, Background } from './styles';
 
-import { Container, Content, Left } from './styles';
+const SignUp: React.FC = () => (
+  <Container>
+    <Background />
+    <Content>
+      <img src={logoImg} alt="GoBarber" />
 
-const SignUp: React.FC = () => {
-  const formRef = useRef<FormHandles>(null);
+      <form>
+        <h1>Faça seu logon</h1>
 
-  // validação usando YUP
-  const handleSubmit = useCallback(async (data: object) => {
-    try {
-      formRef.current?.setErrors({});
+        <Input name="name" icon={FiUser} placeholder="Nome" />
+        <Input name="email" icon={FiMail} placeholder="E-mail" />
+        <Input
+          name="password"
+          icon={FiLock}
+          type="password"
+          placeholder="Senha"
+        />
 
-      const schema = Yup.object().shape({
-        name: Yup.string().required('Nome obrigatório'),
-        email: Yup.string()
-          .email('Digite um e-mail válido!')
-          .required('E-mail obrigatório'),
-        password: Yup.string().min(6, 'No mínimo 6 dígitos'),
-      });
+        <Button type="submit">Cadastrar</Button>
+      </form>
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-    } catch (err) {
-      const errors = getValidationErros(err);
-
-      formRef.current?.setErrors(errors);
-    }
-  }, []);
-
-  return (
-    <Container>
-      <Left>
-        <img src={dataImg} alt="Background" />
-        <h1>Marcenas mattis egestas</h1>
-        <p>
-          Erdum et malesuada fames ac ante ileum primmer in faucibus uspendisse
-          porta.
-        </p>
-      </Left>
-      <Content>
-        <header>
-          <h1>Invision</h1>
-        </header>
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <h1>Getting Started</h1>
-          <label>
-            Full name
-            <Input name="name" />
-          </label>
-          <label>
-            User name or Email
-            <Input name="email" />
-          </label>
-          <label>
-            Create Password
-            <Input name="password" type="password" />
-          </label>
-
-          <Button type="submit">Sign Up</Button>
-          <p>Or</p>
-          <Button className="signWithGoogle" type="submit">
-            <img src={logoGoogle} alt="Sign in with Google" />
-            <p>Sign in with Google</p>
-          </Button>
-          <span>
-            <p>
-              By signing up, you agree to <strong>Invision</strong>
-              <br />
-              <Link to="/terms">Terms of Conditions</Link> and{' '}
-              <Link to="/policy">Privacy Policy</Link>
-            </p>
-            <p>
-              Already on <strong>Invision?</strong> <Link to="/">Log in</Link>
-            </p>
-          </span>
-        </Form>
-      </Content>
-    </Container>
-  );
-};
+      <a href="login">
+        <FiArrowLeft />
+        Voltar para logon
+      </a>
+    </Content>
+  </Container>
+);
 
 export default SignUp;
