@@ -1,6 +1,17 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
+  :root {
+    --orange: #ff9000;
+    --red: #c53030;
+    --input: #232129;
+    --background: #312e38;
+    --white-false: #f4ede8;
+    --white: #fff;
+    --gray-hard: #666360;
+    --gray: #999591;
+}
+
   * {
     margin: 0;
     padding: 0;
@@ -28,3 +39,12 @@ export default createGlobalStyle`
     cursor: pointer;
   }
 `;
+
+// declarando
+// elemento {
+//   --cor-bg-principal: brown;
+// }
+// usando
+// elemento {
+//   background-color: var(--cor-bg-principal);
+// }
